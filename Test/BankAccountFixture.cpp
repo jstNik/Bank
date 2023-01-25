@@ -124,3 +124,27 @@ TEST_F(BankAccountSuite, TestEditTransactionToFailing) {
     ASSERT_EQ(ba2->getBalance(), 1000 - 1000);
     ASSERT_EQ(ba3->getBalance(), 300 + 1000);
 }
+
+TEST_F(BankAccountSuite, TestTransationsGetters){
+    ba1->transfer("laura.frizzi", 900);
+    ASSERT_THROW(ba1->getTransactionFrom(2), MoreExceptions);
+    ASSERT_NO_THROW(ba1->getTransactionFrom(1));
+    ASSERT_EQ(ba1->getTransactionFrom(1), "marco.rossi");
+    ASSERT_THROW(ba2->getTransactionFrom(2), MoreExceptions);
+    ASSERT_NO_THROW(ba2->getTransactionFrom(1));
+    ASSERT_EQ(ba2->getTransactionFrom(1), "marco.rossi");
+
+    ASSERT_THROW(ba1->getTransactionTo(2), MoreExceptions);
+    ASSERT_NO_THROW(ba1->getTransactionTo(1));
+    ASSERT_EQ(ba1->getTransactionTo(1), "laura.frizzi");
+    ASSERT_THROW(ba2->getTransactionTo(2), MoreExceptions);
+    ASSERT_NO_THROW(ba2->getTransactionTo(1));
+    ASSERT_EQ(ba2->getTransactionTo(1), "laura.frizzi");
+
+    ASSERT_THROW(ba1->getTransactionAmount(2), MoreExceptions);
+    ASSERT_NO_THROW(ba1->getTransactionAmount(1));
+    ASSERT_EQ(ba1->getTransactionAmount(1), 900);
+    ASSERT_THROW(ba2->getTransactionAmount(2), MoreExceptions);
+    ASSERT_NO_THROW(ba2->getTransactionAmount(1));
+    ASSERT_EQ(ba2->getTransactionAmount(1), 900);
+}
